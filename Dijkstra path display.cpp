@@ -147,7 +147,7 @@ public:
 			bool found = false;
 			for (int i = 0; i < gridLength; i++) {
 				for (int j = 0; j < gridHeight; j++) {
-					if (matrix[i][j].status == UNVISITED) {
+					if (matrix[i][j].status == UNVISITED /*&& matrix[i][j].distance != INT_MAX*/) {
 						current = &matrix[i][j];
 						found = true;
 						break;
@@ -210,35 +210,55 @@ public:
 			print();
 
 			// sleep
-			Sleep(200);
+			Sleep(100);
 		}
 
 		//print();
 
+		// non - animated backtrack
+		//gridCell* backtrack = current;
+		//while (backtrack->prev != nullptr) {
+		//	//std::cout << backtrack->x << ' ' << backtrack->y << '\n';
+		//	backtrack->cellType = '*';
+		//	backtrack = backtrack->prev;
+		//}
+		//endingCell->cellType = 'X';
+
+		// animated backtrack
 		gridCell* backtrack = current;
 		while (backtrack->prev != nullptr) {
-			//std::cout << backtrack->x << ' ' << backtrack->y << '\n';
 			backtrack->cellType = '*';
+			endingCell->cellType = 'X';
+			// DELETE CURRENT OUTPUT
+			system("cls");
+
+
+			// RE RENDER
+			print();
+
+			// sleep
+			Sleep(100);
 			backtrack = backtrack->prev;
 		}
 		endingCell->cellType = 'X';
 
 
-		for (int i = 0; i < gridLength; i++) {
+		/*for (int i = 0; i < gridLength; i++) {
 			for (int j = 0; j < gridHeight; j++) {
 				if (matrix[i][j].status == UNVISITED) {
-					//matrix[i][j].cellType = '`';
+					matrix[i][j].cellType = '`';
 				}
 			}
-		}
+		}*/
 
-		print();
+		//print();
 
 	}
 
 };
 
 int main() {
+	std::ios::sync_with_stdio(false);
 
 	gridCell start;
 	start.cellType = 'O';
